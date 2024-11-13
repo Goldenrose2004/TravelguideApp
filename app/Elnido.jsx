@@ -11,7 +11,7 @@ export default function App() {
   return (
     <ScrollView contentContainerStyle={styles.container}>
       <View style={styles.card}>
-        {/* Main Image */}
+       
         <Image
           source={{ uri: 'https://i.pinimg.com/564x/13/93/d4/1393d436d71b3bfb4f6eea6532787c77.jpg' }} 
           style={styles.mainImage}

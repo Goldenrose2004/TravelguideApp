@@ -1,109 +1,101 @@
+import { View, Text, Image, ScrollView, ImageBackground, StyleSheet } from 'react-native';
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  ImageBackground,
-  Image,
-} from 'react-native';
-import { useRouter } from 'expo-router'; 
-import icons from '../../constants/icons'; 
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { images } from '../../constants';
+import FormField from '../../components/FormField';
+import CustomButton from '../../components/CustomButton';
+import { Link, useRouter } from 'expo-router';
 
-export default function Signup() {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+const SignUp = () => {
+  const router = useRouter();
+  const [form, setForm] = useState({
+    firstname: '',
+    lastname: '',
+    emailusername: '',
+    createpassword: '',
+    confirmpassword: '',
+  });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const router = useRouter(); 
+  const submit = () => {
+    setIsSubmitting(true);
 
-  const handleCreateAccount = () => {
-    console.log('First Name:', firstName);
-    console.log('Last Name:', lastName);
-    console.log('Email:', email);
-    console.log('Password:', password);
-    console.log('Confirm Password:', confirmPassword);
-    router.push('/sign-in'); 
+    setTimeout(() => {
+      setIsSubmitting(false);
+      router.push('/sign-in');
+    }, 2000);
   };
 
   return (
     <ImageBackground
-      source={{ uri: 'https://i.pinimg.com/736x/23/77/40/237740f34eb7057e251d15d657f4a508.jpg' }} 
+      source={{ uri: 'https://i.pinimg.com/736x/23/77/40/237740f34eb7057e251d15d657f4a508.jpg' }}
       style={styles.background}
+      blurRadius={3} 
     >
-      <View style={styles.container}>
-        <Text style={styles.title}>Travel Guide</Text>
-        
-        <TextInput
-          style={styles.input}
-          placeholder="Firstname"
-          placeholderTextColor="#ccc"
-          value={firstName}
-          onChangeText={setFirstName}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Lastname"
-          placeholderTextColor="#ccc"
-          value={lastName}
-          onChangeText={setLastName}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Email / Username"
-          placeholderTextColor="#ccc"
-          value={email}
-          onChangeText={setEmail}
-        />
-        
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={styles.passwordInput}
-            placeholder="Create password"
-            placeholderTextColor="#ccc"
-            value={password}
-            onChangeText={setPassword}
-            secureTextEntry={!showPassword}
-          />
-          <TouchableOpacity onPress={() => setShowPassword(!showPassword)} style={styles.eyeButton}>
+      <SafeAreaView style={styles.safeArea}>
+        <ScrollView contentContainerStyle={styles.scrollView}>
+          <View style={styles.container}>
             <Image 
-              source={showPassword ? icons.eye : icons.hide_eye} 
-              style={styles.eyeIcon}
+              source={images.textlogo}
               resizeMode="contain"
+              style={styles.logo}
             />
-          </TouchableOpacity>
-        </View>
-        <View style={styles.passwordContainer}>
-          <TextInput
-            style={styles.passwordInput}
-            placeholder="Confirm Password"
-            placeholderTextColor="#ccc"
-            value={confirmPassword}
-            onChangeText={setConfirmPassword}
-            secureTextEntry={!showConfirmPassword}
-          />
-          <TouchableOpacity onPress={() => setShowConfirmPassword(!showConfirmPassword)} style={styles.eyeButton}>
-            <Image 
-              source={showConfirmPassword ? icons.eye : icons.hide_eye} 
-              style={styles.eyeIcon}
-              resizeMode="contain"
+            <Text style={styles.headerText}>Sign up to TravelGuide</Text>
+            
+            <FormField
+              title="Firstname"
+              value={form.username}
+              handleChangeText={(e) => setForm({ ...form, firstname: e })}
+              otherStyles={styles.field}
             />
-          </TouchableOpacity>
-        </View>
+             
+             <FormField
+              title="Lastname"
+              value={form.username}
+              handleChangeText={(e) => setForm({ ...form, lastname: e })}
+              otherStyles={styles.field}
+            />
+            <FormField
+              title="Email / Username"
+              value={form.email}
+              handleChangeText={(e) => setForm({ ...form, emailusername: e })}
+              otherStyles={styles.field}
+              keyboardType="email-address"
+            />
+            <FormField
+              title="Password"
+              value={form.password}
+              handleChangeText={(e) => setForm({ ...form, password: e })}
+              otherStyles={styles.field}
+            />
+             <FormField
+              title="Confirm Password"
+              value={form.password}
+              handleChangeText={(e) => setForm({ ...form, confirmpassword: e })}
+              otherStyles={styles.field}
+            />
+            
+            <CustomButton
+              title="Sign Up"
+              handlePress={submit}
+              containerStyles={styles.button}
+              isLoading={isSubmitting}
+            />
 
-        
-        <TouchableOpacity style={styles.createAccountButton} onPress={handleCreateAccount}>
-          <Text style={styles.createAccountButtonText}>Create Account</Text>
-        </TouchableOpacity>
-      </View>
+            <View style={styles.signupContainer}>
+              <Text style={styles.signupText}>
+                Already have an account?
+              </Text>
+              <Link href="/sign-in" style={styles.signupLink}>
+                Sign In
+              </Link>
+            </View>
+          </View>
+        </ScrollView>
+      </SafeAreaView>
     </ImageBackground>
   );
-}
+};
 
 const styles = StyleSheet.create({
   background: {
@@ -114,59 +106,49 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   container: {
-    width: '80%',
-    backgroundColor: 'rgba(0, 0, 0, 0.5)',
-    padding: 20,
-    borderRadius: 10,
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    marginVertical: 24,
   },
-  title: {
-    fontSize: 32,
-    color: '#fff',
+  logo: {
+    width: 200,
+    height: 450,
+    marginTop: -230,
+    marginBottom: -190,
+  },
+  headerText: {
+    
+    fontSize: 24,
+    color: '#FFFFFF',
+    fontFamily: 'Radley_Regular',
+    marginTop: 16,
     textAlign: 'center',
-    marginBottom: 40,
+    marginBottom: 10,
   },
-  input: {
-    height: 50,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 10,
-    backgroundColor: '#000',
-    color: '#fff',
-    marginBottom: 20,
+  button: {
+    width: '100%',
+    marginTop: 28,
   },
-  passwordContainer: {
+  signupContainer: {
+    
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 20,
-    borderColor: '#ccc',
-    borderWidth: 1,
-    borderRadius: 8,
-    backgroundColor: '#000',
+    marginTop: 20,
   },
-  passwordInput: {
-    flex: 1,
-    height: 50,
-    paddingHorizontal: 10,
-    color: '#fff',
+  signupText: {
+    width: '80%',
+    fontSize: 16,
+    color: '#D1D5DB',
+    fontFamily: 'Radley_Regular',
   },
-  eyeButton: {
-    paddingHorizontal: 10,
-    paddingVertical: 12, 
-  },
-  eyeIcon: {
-    width: 20, 
-    height: 20, 
-    tintColor: '#fff', 
-  },
-  createAccountButton: {
-    backgroundColor: '#1e90ff',
-    paddingVertical: 15,
-    borderRadius: 8,
-    alignItems: 'center',
-  },
-  createAccountButtonText: {
-    color: '#fff',
-    fontSize: 18,
+  signupLink: {
+    fontSize: 16,
+    color: '#1E90FF',
+    fontFamily: 'Radley_Regular',
+    marginLeft: -30,
   },
 });
+
+export default SignUp;
