@@ -19,3 +19,9 @@ Travel Guide App
 
 # Sign In Screen
 <img src="assets/images/login.jpg">  
+
+# Tabs Screen
+<img src="assets/images/screenshot/tabs.png">  
+
+#Walkthrough
+
