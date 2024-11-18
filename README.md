@@ -21,7 +21,7 @@ Travel Guide App
 <img src="assets/images/login.jpg">  
 
 # Tabs Screen
-<img src="assets/images/tabs.png">  
+<img src="assets/images/tabs.jpg">  
 
 #Walkthrough
 
