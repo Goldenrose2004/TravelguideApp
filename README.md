@@ -12,7 +12,7 @@ Travel Guide App
 * HTML, CSS and JS
 
 # Home Screen
-<img src="assets/images/screenshot/onboarding.jpg">  
+<img src="assets/images/onboarding.jpg">  
 
 # Sign Up Screen
 <img src="assets/images/screenshot/signup.jpg">  
