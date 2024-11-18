@@ -15,7 +15,7 @@ Travel Guide App
 <img src="assets/images/onboarding.jpg">  
 
 # Sign Up Screen
-<img src="assets/images/screenshot/signup.jpg">  
+<img src="assets/images/signup.jpg">  
 
 # Sign In Screen
-<img src="assets/images/screenshot/login.jpg">  
+<img src="assets/images/login.jpg">  
